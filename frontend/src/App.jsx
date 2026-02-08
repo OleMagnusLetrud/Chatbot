@@ -2,6 +2,8 @@ import { useState } from "react";
 
 function App() {
   const [response, setResponse] = useState("");
+  const [message, setMessage] = useState("");
+  const [figure, setFigure] = useState("");
 
   async function testAPI() {
     try {
@@ -11,8 +13,8 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          figure: "napoleon",
-          message: "What is your greatest victory?"
+          figure: figure,
+          message: message
         }),
       });
 
@@ -25,8 +27,17 @@ function App() {
 
   return (
     <div>
-      <h2>API TEST RQ napoleon</h2>
-      <button onClick={testAPI}>What is your greatest victory?</button>
+      <h2>API TEST RQ</h2>
+     <button onClick={() => setFigure("napoleon")}>napoleon</button>
+     <button onClick={() => setFigure("cleopatra")}>cleopatra</button>
+     <button onClick={() => setFigure("caesar")}>caesar</button>
+
+
+      <input type="text"
+      placeholder="Ask napoleon something"
+      value={message}
+      onChange={(e)=> setMessage(e.target.value)} />
+      <button onClick={testAPI}>SEND</button>
       <p>{response}</p>
     </div>
   );
