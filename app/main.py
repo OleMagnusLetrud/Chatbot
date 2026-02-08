@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import os
 from google import genai
 from dotenv import load_dotenv
-
+from fastapi.middleware.cors import CORSMiddleware
 
 # paste "uvicorn app.main:app --reload" to run website
 
@@ -12,6 +12,12 @@ load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))  
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class ChatRequest (BaseModel):
     figure: str
