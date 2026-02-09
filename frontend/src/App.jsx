@@ -1,9 +1,16 @@
 import { useState } from "react";
+import "./index.css";
 
 function App() {
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
   const [figure, setFigure] = useState("");
+
+  const handleKeypress = e => {
+    if (e.keyCode === 13) {
+      testAPI();
+    }
+  };
 
   async function testAPI() {
     try {
@@ -25,20 +32,30 @@ function App() {
     }
   }
 
-  return (
-    <div>
+   return (
+    <div className="app-container">
       <h2>API TEST RQ</h2>
-     <button onClick={() => setFigure("napoleon")}>napoleon</button>
-     <button onClick={() => setFigure("cleopatra")}>cleopatra</button>
-     <button onClick={() => setFigure("caesar")}>caesar</button>
 
+      <div className="button-row">
+        <button onClick={() => setFigure("napoleon")}>Napoleon</button>
+        <button onClick={() => setFigure("cleopatra")}>Cleopatra</button>
+        <button onClick={() => setFigure("caesar")}>Caesar</button>
+      </div>
 
-      <input type="text"
-      placeholder="Ask napoleon something"
-      value={message}
-      onChange={(e)=> setMessage(e.target.value)} />
-      <button onClick={testAPI}>SEND</button>
-      <p>{response}</p>
+      <div className="input-area">
+        <input
+          type="text"
+          placeholder={`Ask ${figure || "someone"} something`}
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={handleKeypress}
+        />
+        <button onClick={testAPI}>SEND</button>
+      </div>
+
+      <div className="response">
+        <p>{response}</p>
+      </div>
     </div>
   );
 }

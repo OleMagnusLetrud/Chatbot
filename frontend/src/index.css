@@ -1,0 +1,33 @@
+body {
+    background-color: rgb(42, 41, 41);
+}
+.app-container {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+  color: aliceblue;
+}
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+button {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+.input-area {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.response {
+  max-width: 400px;
+  text-align: center;
+}
