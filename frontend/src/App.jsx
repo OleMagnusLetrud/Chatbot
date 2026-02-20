@@ -6,6 +6,7 @@ function App() {
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
   const [figure, setFigure] = useState("");
+  const [responseList, setResponseList] = useState([]);  
 
   const handleKeypress = e => {
     if (e.keyCode === 13) {
@@ -39,6 +40,7 @@ function App() {
       const data = await res.json();
       setResponse(data.reply);
       setMessage("");
+      setResponseList(data.responseList);
     } catch (err) {
       setResponse("Error: Could not reach backend");
     }
@@ -58,8 +60,10 @@ function App() {
     </div>
     <div className="app-container2">
        <div className="response">
-        <p>{response}</p>
-      </div>
+        {responseList.map((msg, index) => (
+          <p key={index}>{msg}</p>
+          ))}      
+        </div>
       <div className="input-area">
         <input
           type="text"

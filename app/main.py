@@ -11,6 +11,7 @@ load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))  
 conversations = {}
+responseList = []
 
 app = FastAPI()
 app.add_middleware(
@@ -65,13 +66,16 @@ def chat(request: ChatRequest):
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=history
+        contents=history,
     )
-
+    
     reply = response.text
+    responseList.append(reply)
 
     history += f"{figure.capitalize()}: {reply}\n"
 
     conversations[session_id] = history
 
-    return {"reply": reply}
+    return {"reply": reply,
+            "responseList" : responseList
+    }
