@@ -2,15 +2,23 @@ body {
     background-color: rgb(42, 41, 41);
 }
 .app-container {
-
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  font-family: Arial, sans-serif;
+  color: aliceblue;
+}
+.app-container2 {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
   font-family: Arial, sans-serif;
   color: aliceblue;
+  margin-top: auto;
 }
+
 .button-row {
   display: flex;
   gap: 10px;
@@ -21,13 +29,16 @@ button {
   padding: 8px 12px;
   cursor: pointer;
 }
+.response {
+  display: flex;
+  max-width: 400px;
+  text-align: center;
+}
+
 .input-area {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
-}
-
-.response {
-  max-width: 400px;
-  text-align: center;
+  align-self: center;
+  align-content: flex-end;
 }

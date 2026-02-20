@@ -10,6 +10,7 @@ from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))  
+conversations = {}
 
 app = FastAPI()
 app.add_middleware(
@@ -22,12 +23,7 @@ app.add_middleware(
 class ChatRequest (BaseModel):
     figure: str
     message: str
-
-FIGURE_RESPONSES = {
-    "napoleon",
-    "cleopatra",
-    "caesar"
-}
+    session_id: str
 
 FIGURE_PROMPTS = {
     "napoleon": (
@@ -51,24 +47,31 @@ def ping():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
+    session_id = request.session_id
     figure = request.figure.lower()
 
-    if figure not in FIGURE_RESPONSES:
+    if figure not in FIGURE_PROMPTS:
         raise HTTPException(
             status_code=400,
-            detail = f"Unknown historical figure: {request.figure}"
+            detail=f"Unknown historical figure: {request.figure}"
         )
-    system_prompt = FIGURE_PROMPTS[figure]
-    full_prompt = f"""
-{system_prompt}
 
-User question:
-{request.message}
-"""
+    if session_id not in conversations:
+        conversations[session_id] = FIGURE_PROMPTS[figure] + "\n\nConversation:\n"
+
+    history = conversations[session_id]
+
+    history += f"User: {request.message}\n"
 
     response = client.models.generate_content(
-    model= "gemini-2.5-flash",
-    contents=full_prompt
-)
+        model="gemini-2.5-flash",
+        contents=history
+    )
 
-    return {"reply": response.text}
+    reply = response.text
+
+    history += f"{figure.capitalize()}: {reply}\n"
+
+    conversations[session_id] = history
+
+    return {"reply": reply}
