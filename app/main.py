@@ -11,7 +11,7 @@ load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))  
 conversations = {}
-responseList = []
+chat_lists = {}
 
 app = FastAPI()
 app.add_middleware(
@@ -48,6 +48,8 @@ def ping():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
+    global chat_lists
+    global conversations
     session_id = request.session_id
     figure = request.figure.lower()
 
@@ -59,10 +61,16 @@ def chat(request: ChatRequest):
 
     if session_id not in conversations:
         conversations[session_id] = FIGURE_PROMPTS[figure] + "\n\nConversation:\n"
+        chat_lists[session_id] = []
 
     history = conversations[session_id]
+    chat_lists = chat_lists[session_id]
 
     history += f"User: {request.message}\n"
+    chat_lists.append({
+        "role":"user",
+        "text":request.message
+    })
 
     response = client.models.generate_content(
         model="gemini-2.5-flash",
@@ -70,12 +78,15 @@ def chat(request: ChatRequest):
     )
     
     reply = response.text
-    responseList.append(reply)
 
     history += f"{figure.capitalize()}: {reply}\n"
+    chat_lists.append({
+        "role": "bot",
+        "text": reply
+    })
 
     conversations[session_id] = history
 
     return {"reply": reply,
-            "responseList" : responseList
+            "chat": chat_lists
     }
