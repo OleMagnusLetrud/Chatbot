@@ -38,6 +38,14 @@ function App() {
     setResponse("Please enter a message.");
     return;
   }
+   const userText = message;
+    setMessage("");
+
+    setChat((prev) => [
+      ...prev,
+      { role: "user", text: userText }
+    ]);
+    
     try {
       const res = await fetch("http://127.0.0.1:8000/chat", {
         method: "POST",
