@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./index.css";
 
 function App() {
-  const [sessionId] = useState(crypto.randomUUID());
+  const [sessionId, setSessionID] = useState(crypto.randomUUID());
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
   const [figure, setFigure] = useState("");
@@ -12,6 +12,16 @@ function App() {
       testAPI();
     }
   };
+  function changeFigure(newFigure){
+    setFigure(newFigure);
+    
+    setSessionID(crypto.randomUUID());
+
+    setChat([]);
+    setResponse("");
+    setMessage("");
+    
+  }
 
   async function testAPI() {
     if (!figure) {
@@ -49,11 +59,11 @@ function App() {
     <>
     <div className="app-container">
       <h2>Historic chatbot</h2>
-
+      <h3>Chose the historic figure you want to talk</h3>
       <div className="button-row">
-        <button onClick={() => setFigure("napoleon")}>Napoleon</button>
-        <button onClick={() => setFigure("cleopatra")}>Cleopatra</button>
-        <button onClick={() => setFigure("caesar")}>Caesar</button>
+        <button onClick={() => changeFigure("napoleon")}>Napoleon</button>
+        <button onClick={() => changeFigure("cleopatra")}>Cleopatra</button>
+        <button onClick={() => changeFigure("caesar")}>Caesar</button>
       </div>
 
     </div>

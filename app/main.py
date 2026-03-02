@@ -5,7 +5,7 @@ from google import genai
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 
-# paste "uvicorn app.main:app --reload" to run website
+# paste ".\venv\Scripts\Activate.ps1" "uvicorn app.main:app --reload" to run website
 
 load_dotenv()
 
@@ -64,29 +64,32 @@ def chat(request: ChatRequest):
         chat_lists[session_id] = []
 
     history = conversations[session_id]
-    chat_lists = chat_lists[session_id]
+    session_chat = chat_lists[session_id]
 
     history += f"User: {request.message}\n"
-    chat_lists.append({
-        "role":"user",
-        "text":request.message
+    session_chat.append({
+        "role": "user",
+        "text": request.message
     })
 
-    response = client.models.generate_content(
-        model="gemini-2.5-flash",
-        contents=history,
-    )
-    
-    reply = response.text
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=history,
+        )
+        reply = response.text
+    except Exception:
+        reply = "AI error or quota exceeded."
 
     history += f"{figure.capitalize()}: {reply}\n"
-    chat_lists.append({
+    session_chat.append({
         "role": "bot",
         "text": reply
     })
 
     conversations[session_id] = history
 
-    return {"reply": reply,
-            "chat": chat_lists
-    }
+    return {
+        "reply": reply,
+        "chat": session_chat
+}
