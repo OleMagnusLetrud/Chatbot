@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./index.css";
 
 function App() {
@@ -7,11 +7,16 @@ function App() {
   const [message, setMessage] = useState("");
   const [figure, setFigure] = useState("");
   const [chat, setChat] = useState([])
+  const bottomRef = useRef(null);
   const handleKeypress = e => {
     if (e.keyCode === 13) {
       testAPI();
     }
   };
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chat]);
+  
   function changeFigure(newFigure){
     setFigure(newFigure);
     
@@ -77,6 +82,7 @@ function App() {
             {msg.text}
           </p>
           ))} 
+          <div ref={bottomRef} />
         </div>
       <div className="input-area">
         <input
