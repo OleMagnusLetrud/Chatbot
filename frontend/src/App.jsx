@@ -7,6 +7,7 @@ function App() {
   const [message, setMessage] = useState("");
   const [figure, setFigure] = useState("");
   const [chat, setChat] = useState([])
+  const [loading, setLoading] = useState(false);
   const bottomRef = useRef(null);
   const handleKeypress = e => {
     if (e.keyCode === 13) {
@@ -46,6 +47,8 @@ function App() {
       { role: "user", text: userText }
     ]);
     
+    setLoading(true);
+
     try {
       const res = await fetch("http://127.0.0.1:8000/chat", {
         method: "POST",
@@ -60,12 +63,15 @@ function App() {
       });
 
       const data = await res.json();
-      setResponse(data.reply);
-      setMessage("");
       setChat(data.chat);
-    } catch (err) {
-      setResponse("Error: Could not reach backend");
-    }
+      setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        setChat((prev) => [
+          ...prev,
+          { role: "bot", text: "Error: Could not reach backend" }
+        ]);
+      }
   }
 
    return (
@@ -90,6 +96,11 @@ function App() {
             {msg.text}
           </p>
           ))} 
+          {loading && (
+        <p>
+          <strong>{figure}:</strong> <em>thinking...</em>
+        </p>
+)}
           <div ref={bottomRef} />
         </div>
       <div className="input-area">
@@ -100,7 +111,9 @@ function App() {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeypress}
           />
-        <button onClick={testAPI}>SEND</button>
+        <button onClick={testAPI} disabled={loading}>
+          {loading ? "..." : "SEND"}
+        </button>
       </div>
     </div>
     </>
