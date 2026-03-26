@@ -4,9 +4,11 @@ import os
 from google import genai
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
+from app.database import init_db, save_message, load_messages
 
 # paste ".\venv\Scripts\Activate.ps1" "uvicorn app.main:app --reload" to run website
 
+init_db()
 load_dotenv()
 
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))  
