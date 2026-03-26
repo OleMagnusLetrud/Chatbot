@@ -73,6 +73,7 @@ def chat(request: ChatRequest):
         "role": "user",
         "text": request.message
     })
+    save_message(session_id, figure, "user", request.message)
 
     try:
         response = client.models.generate_content(
@@ -88,6 +89,7 @@ def chat(request: ChatRequest):
         "role": "bot",
         "text": reply
     })
+    save_message(session_id, figure, "bot", reply)
 
     conversations[session_id] = history
 
