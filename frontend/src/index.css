@@ -81,10 +81,11 @@ input{
   display: flex;
   gap: 10px;
   max-width: 100%;
-  width: 37.8%;
+  width: 64.4%;
   padding: 8px 12px;
   border-radius: 12px;
   background-color: #16314b;
+  margin-bottom: 15px;
 }
 img{
   width: 150px;
