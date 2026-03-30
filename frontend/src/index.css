@@ -28,6 +28,7 @@ body {
   display: flex;
   gap: 10px;
   margin-bottom: 15px;
+  align-items: center;
 }
 
 button {
@@ -55,4 +56,10 @@ button {
 img{
   width: 150px;
   height: 150px;
+}
+.img_buttons{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }

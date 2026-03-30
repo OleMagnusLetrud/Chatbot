@@ -80,12 +80,18 @@ function App() {
       <h2>Historic chatbot</h2>
       <h3>Chose the historic figure you want to talk</h3>
       <div className="button-row">
-        <div className="napoleon_button">
+        <div className="img_buttons">
           <img src="/images/napoleon_art.png" alt="napoleon.png" />
           <button onClick={() => changeFigure("napoleon")}>Napoleon</button>
         </div>
-        <button onClick={() => changeFigure("cleopatra")}>Cleopatra</button>
-        <button onClick={() => changeFigure("caesar")}>Caesar</button>
+        <div className="img_buttons">
+          <img src="/images/cleopatra_art.png" alt="cleopatra.png" />
+          <button onClick={() => changeFigure("cleopatra")}>Cleopatra</button>
+        </div>
+        <div className="img_buttons">
+          <img src="/images/ceasar_art.png" alt="ceasar.png"/>
+          <button onClick={() => changeFigure("caesar")}>Caesar</button>
+        </div>
       </div>
 
     </div>
