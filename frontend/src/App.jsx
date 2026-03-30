@@ -73,12 +73,12 @@ function App() {
         ]);
       }
   }
-
+//Thank you too my girlfreind for drwaing the historic figures<3
    return (
     <>
     <div className="app-container">
       <h2>Historic chatbot</h2>
-      <h3>Chose the historic figure you want to talk</h3>
+      <h3>Chose the historic figure you want to talk to</h3>
       <div className="button-row">
         <div className="img_buttons">
           <img src="/images/napoleon_art.png" alt="napoleon.png" />
@@ -93,17 +93,16 @@ function App() {
           <button onClick={() => changeFigure("caesar")}>Caesar</button>
         </div>
       </div>
-
     </div>
     <div className="app-container2">
        <div className="response">
         {chat.map((msg, index) => (
-          <p key={index}>
+          <div key={index} className={`message ${msg.role ==="user"? "message-user" : "message-bot"}`}>
             <strong>
               {msg.role === "user" ? "you" : figure}:
             </strong>{" "}
             {msg.text}
-          </p>
+          </div>
           ))} 
           {loading && (
         <p>
@@ -120,7 +119,7 @@ function App() {
           onChange={(e) => setMessage(e.target.value)}
           onKeyDown={handleKeypress}
           />
-        <button onClick={testAPI} disabled={loading}>
+        <button onClick={testAPI} disabled={loading} className="send_button">
           {loading ? "..." : "SEND"}
         </button>
       </div>

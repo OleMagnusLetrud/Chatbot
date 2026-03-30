@@ -22,6 +22,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   color: aliceblue;
+  align-items: center;
 }
 
 .button-row {
@@ -32,8 +33,12 @@ body {
 }
 
 button {
+  background-color: #16314b;
+  color: aliceblue;
+  max-width: 70%;
   padding: 8px 12px;
-  cursor: pointer;
+  border-radius: 12px;
+  border-color: #16314b;
 }
 .response {
   flex: 1;
@@ -46,12 +51,26 @@ button {
   gap: 8px;
   padding: 10px;
 }
+input{
+  width: 500%;
+  max-width: 500%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background-color: #16314b; 
+  color: aliceblue;
+  display: flex;
+  outline: none;
+  border: none;
+}
 
 .input-area {
   display: flex;
   gap: 10px;
-  padding: 15px;
-  border-top: 1px solid #555;
+  max-width: 100%;
+  width: 39%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background-color: #16314b;
 }
 img{
   width: 150px;
@@ -62,4 +81,19 @@ img{
   flex-direction: column;
   align-items: center;
   gap: 0;
+}
+.message {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: 12px;
+}
+
+.message-user {
+  align-self: flex-end;
+  background-color: #3a3a3a;
+}
+
+.message-bot {
+  align-self: flex-start;
+  background-color: #16314b;
 }
