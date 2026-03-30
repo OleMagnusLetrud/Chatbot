@@ -2,9 +2,17 @@
   height: 100%;
   margin: 0;
 }
-
-body {
+.page_wrapper {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  border-left: 2px solid #04040c;
+  border-right: 2px solid #04040c;
+  min-height: 100vh;
   background-color: rgb(42, 41, 41);
+}
+body {
+  background-color: rgb(30, 30, 30);
   display: flex;
   flex-direction: column;
 }
