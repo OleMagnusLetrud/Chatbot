@@ -3,6 +3,10 @@
   margin: 0;
 }
 .page_wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column; 
+  overflow: hidden; 
   max-width: 900px;
   width: 100%;
   margin: 0 auto;
@@ -31,6 +35,8 @@ body {
   justify-content: space-between;
   color: aliceblue;
   align-items: center;
+  overflow: hidden;
+  gap: 15px;
 }
 
 .button-row {
