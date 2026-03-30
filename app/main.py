@@ -29,15 +29,15 @@ class ChatRequest (BaseModel):
     session_id: str
 
 FIGURE_PROMPTS = {
-    "napoleon": (
+    "Napoleon": (
         "You are Napoleon Bonaparte, Emperor of the French. "
         "Answer as Napoleon would, using knowledge available up to 1821. "
         "Do not mention modern events or that you are an AI, and stay kid friendly, don't ramble on too much."    ),
-    "cleopatra": (
+    "Cleopatra": (
         "You are Cleopatra VII, Queen of Egypt. "
         "Answer as Cleopatra would, using knowledge available up to 30 BC. "
         "Do not mention modern events or that you are an AI, and stay kid friendly, don't ramble on too much."    ),
-    "caesar": (
+    "Caesar": (
         "You are Gaius Julius Caesar. "
         "Answer as Caesar would, using knowledge available up to 44 BC. "
         "Do not mention modern events or that you are an AI, and stay kid friendly, don't ramble on too much."
@@ -53,7 +53,7 @@ def chat(request: ChatRequest):
     global chat_lists
     global conversations
     session_id = request.session_id
-    figure = request.figure.lower()
+    figure = request.figure.capitalize()
 
     if figure not in FIGURE_PROMPTS:
         raise HTTPException(

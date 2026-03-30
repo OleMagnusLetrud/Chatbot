@@ -78,19 +78,19 @@ function App() {
     <>
     <div className="app-container">
       <h2>Historic chatbot</h2>
-      <h3>Chose the historic figure you want to talk to</h3>
+      <h3>Choose the historic figure you want to talk to</h3>
       <div className="button-row">
         <div className="img_buttons">
           <img src="/images/napoleon_art.png" alt="napoleon.png" />
-          <button onClick={() => changeFigure("napoleon")}>Napoleon</button>
+          <button onClick={() => changeFigure("Napoleon")}>Napoleon</button>
         </div>
-        <div className="img_buttons">
+        <div className="img_buttons"> 
           <img src="/images/cleopatra_art.png" alt="cleopatra.png" />
-          <button onClick={() => changeFigure("cleopatra")}>Cleopatra</button>
+          <button onClick={() => changeFigure("Cleopatra")}>Cleopatra</button>
         </div>
         <div className="img_buttons">
           <img src="/images/ceasar_art.png" alt="ceasar.png"/>
-          <button onClick={() => changeFigure("caesar")}>Caesar</button>
+          <button onClick={() => changeFigure("Caesar")}>Caesar</button>
         </div>
       </div>
     </div>
@@ -99,7 +99,7 @@ function App() {
         {chat.map((msg, index) => (
           <div key={index} className={`message ${msg.role ==="user"? "message-user" : "message-bot"}`}>
             <strong>
-              {msg.role === "user" ? "you" : figure}:
+              {msg.role === "user" ? "You" : figure}:
             </strong>{" "}
             {msg.text}
           </div>
