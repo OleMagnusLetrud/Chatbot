@@ -81,7 +81,8 @@ def chat(request: ChatRequest):
             contents=history,
         )
         reply = response.text
-    except Exception:
+    except Exception as e:
+        print(f"AI ERROR: {e}")
         reply = "AI error or quota exceeded."
 
     history += f"{figure.capitalize()}: {reply}\n"
