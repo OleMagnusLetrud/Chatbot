@@ -62,8 +62,17 @@ def chat(request: ChatRequest):
         )
 
     if session_id not in conversations:
-        conversations[session_id] = FIGURE_PROMPTS[figure] + "\n\nConversation:\n"
-        chat_lists[session_id] = []
+        past = load_messages(session_id)
+        if past:
+            history = FIGURE_PROMPTS[figure] + "\n\nConversation:\n"
+            for msg in past:
+                prefix = "User" if msg["role"] == "user" else figure
+                history += f"{prefix}: {msg['text']}\n"
+            conversations[session_id] = history
+            chat_lists[session_id] = past
+        else:
+            conversations[session_id] = FIGURE_PROMPTS[figure] + "\n\nConversation:\n"
+            chat_lists[session_id] = []
 
     history = conversations[session_id]
     session_chat = chat_lists[session_id]
@@ -98,3 +107,11 @@ def chat(request: ChatRequest):
         "reply": reply,
         "chat": session_chat
 }
+@app.get("/sessions")
+def get_all_sessions():
+    return get_sessions()
+
+@app.get("/sessions/{session_id}")
+def get_sessions(session_id: str):
+    messages = load_messages(session_id)
+    return {"chat": messages}

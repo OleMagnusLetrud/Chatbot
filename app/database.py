@@ -42,3 +42,15 @@ def load_messages(session_id: str) -> list:
     rows = cursor.fetchall()
     conn.close()
     return [{"role": row[0], "text": row[1]} for row in rows]
+def get_sessions() -> list:
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT session_id, figure, MIN(timestamp)
+        FROM messages
+        GROUP BY session_id
+        ORDER BY started DESC
+    """)
+    rows = cursor.fetchall()
+    conn.close()
+    return[{"session_id": row[0], "figure": row[1], "started": row[2]} for row in rows]

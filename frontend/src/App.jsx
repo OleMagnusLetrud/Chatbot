@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import "./index.css";
 
 function App() {
+  const [sessions, setSessions] = useState([]);
   const [sessionId, setSessionID] = useState(crypto.randomUUID());
   const [response, setResponse] = useState("");
   const [message, setMessage] = useState("");
@@ -73,7 +74,7 @@ function App() {
         ]);
       }
   }
-//Thank you too my girlfreind for drwaing the historic figures<3
+//Thank you to my girlfreind for drwaing the historic figures<3
    return (
     <>
     <div className="page_wrapper">
