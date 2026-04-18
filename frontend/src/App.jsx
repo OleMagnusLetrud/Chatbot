@@ -19,6 +19,12 @@ function App() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chat]);
   
+  useEffect(() => {
+  fetch("http://127.0.0.1:8000/sessions")
+    .then(res => res.json())
+    .then(data => setSessions(data));
+}, []);
+  
   function changeFigure(newFigure){
     setFigure(newFigure);
     
@@ -29,6 +35,15 @@ function App() {
     setMessage("");
     
   }
+
+  async function loadSession(session_id, figure) {
+  const res = await fetch(`http://127.0.0.1:8000/sessions/${session_id}`);
+  const data = await res.json();
+  setFigure(figure);
+  setSessionID(session_id);
+  setChat(data.chat);
+  setMessage("");
+}
 
   async function testAPI() {
     if (!figure) {
@@ -96,23 +111,33 @@ function App() {
           </div>
         </div>
       </div>
-      <div className="app-container2">
-        <div className="response">
-          {chat.map((msg, index) => (
-            <div key={index} className={`message ${msg.role ==="user"? "message-user" : "message-bot"}`}>
-              <strong>
-                {msg.role === "user" ? "You" : figure}:
-              </strong>{" "}
-              {msg.text}
+      <div className="layout">
+        <div className="sidebar">
+          <h3>Past chats</h3>
+          {sessions.map(s => (
+            <div key={s.session_id} className="session-item" onClick={() => loadSession(s.session_id, s.figure)}>
+              <strong>{s.figure}</strong>
+              <span>{s.started.slice(0, 10)}</span>
             </div>
-            ))} 
-            {loading && (
-          <p>
-            <strong>{figure}:</strong> <em>thinking...</em>
-          </p>
-  )}
-            <div ref={bottomRef} />
-          </div>
+          ))}
+        </div>
+        <div className="app-container2">
+          <div className="response">
+            {chat.map((msg, index) => (
+              <div key={index} className={`message ${msg.role ==="user"? "message-user" : "message-bot"}`}>
+                <strong>
+                  {msg.role === "user" ? "You" : figure}:
+                </strong>{" "}
+                {msg.text}
+              </div>
+              ))} 
+              {loading && (
+            <p>
+              <strong>{figure}:</strong> <em>thinking...</em>
+            </p>
+          )}
+              <div ref={bottomRef} />
+            </div>
         <div className="input-area">
           <input
             type="text"
@@ -124,6 +149,7 @@ function App() {
           <button onClick={testAPI} disabled={loading} className="send_button">
             {loading ? "..." : "SEND"}
           </button>
+          </div>
         </div>
       </div>
     </div>
